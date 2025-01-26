@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Account;
-use App\Models\Contact;
-use App\Models\Organization;
 use App\Models\User;
+use App\Models\Article;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,26 +13,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $account = Account::create(['name' => 'Acme Corporation']);
-
-        User::factory()->create([
-            'account_id' => $account->id,
+        // Buat user utama
+        $user = User::factory()->create([
             'first_name' => 'John',
             'last_name' => 'Doe',
             'email' => 'johndoe@example.com',
-            'password' => 'secret',
+            'password' => bcrypt('secret'),
             'owner' => true,
         ]);
 
-        User::factory(5)->create(['account_id' => $account->id]);
+        // Buat beberapa user tambahan
+        User::factory(5)->create();
 
-        $organizations = Organization::factory(100)
-            ->create(['account_id' => $account->id]);
-
-        Contact::factory(100)
-            ->create(['account_id' => $account->id])
-            ->each(function ($contact) use ($organizations) {
-                $contact->update(['organization_id' => $organizations->random()->id]);
-            });
+        // Buat beberapa kontak yang terhubung dengan user
+        Article::factory(100)->create([
+            'user_id' => $user->id, // Menyesuaikan dengan relasi user-contact
+        ]);
     }
 }

@@ -1,13 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\ContactsController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ImagesController;
-use App\Http\Controllers\OrganizationsController;
-use App\Http\Controllers\ReportsController;
-use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Creator\UsersController;
+use App\Http\Controllers\Creator\ImagesController;
+use App\Http\Controllers\Frontline\HomeController;
+use App\Http\Controllers\Creator\ReportsController;
+use App\Http\Controllers\Frontline\AboutController;
+use App\Http\Controllers\Creator\DashboardController;
+use App\Http\Controllers\Frontline\ArticleController;
+use App\Http\Controllers\Frontline\ProjectController;
+use App\Http\Controllers\Creator\PublicationController;
+use App\Http\Controllers\Creator\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,116 +25,86 @@ use Illuminate\Support\Facades\Route;
 
 // Auth
 
-Route::get('login', [AuthenticatedSessionController::class, 'create'])
+Route::get('admin/login', [AuthenticatedSessionController::class, 'create'])
     ->name('login')
     ->middleware('guest');
 
-Route::post('login', [AuthenticatedSessionController::class, 'store'])
+Route::post('admin/login', [AuthenticatedSessionController::class, 'store'])
     ->name('login.store')
     ->middleware('guest');
 
-Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
+Route::delete('admin/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
 
 // Dashboard
 
-Route::get('/', [DashboardController::class, 'index'])
+Route::get('/admin', [DashboardController::class, 'index'])
     ->name('dashboard')
     ->middleware('auth');
 
 // Users
 
-Route::get('users', [UsersController::class, 'index'])
+Route::get('admin/users', [UsersController::class, 'index'])
     ->name('users')
     ->middleware('auth');
 
-Route::get('users/create', [UsersController::class, 'create'])
+Route::get('admin/users/create', [UsersController::class, 'create'])
     ->name('users.create')
     ->middleware('auth');
 
-Route::post('users', [UsersController::class, 'store'])
+Route::post('admin/users', [UsersController::class, 'store'])
     ->name('users.store')
     ->middleware('auth');
 
-Route::get('users/{user}/edit', [UsersController::class, 'edit'])
+Route::get('admin/users/{user}/edit', [UsersController::class, 'edit'])
     ->name('users.edit')
     ->middleware('auth');
 
-Route::put('users/{user}', [UsersController::class, 'update'])
+Route::put('admin/users/{user}', [UsersController::class, 'update'])
     ->name('users.update')
     ->middleware('auth');
 
-Route::delete('users/{user}', [UsersController::class, 'destroy'])
+Route::delete('admin/users/{user}', [UsersController::class, 'destroy'])
     ->name('users.destroy')
     ->middleware('auth');
 
-Route::put('users/{user}/restore', [UsersController::class, 'restore'])
+Route::put('admin/users/{user}/restore', [UsersController::class, 'restore'])
     ->name('users.restore')
     ->middleware('auth');
 
-// Organizations
+// Publications
 
-Route::get('organizations', [OrganizationsController::class, 'index'])
-    ->name('organizations')
+Route::get('admin/publications', [PublicationController::class, 'index'])
+    ->name('publications')
     ->middleware('auth');
 
-Route::get('organizations/create', [OrganizationsController::class, 'create'])
-    ->name('organizations.create')
+Route::get('admin/publications/create', [PublicationController::class, 'create'])
+    ->name('publications.create')
     ->middleware('auth');
 
-Route::post('organizations', [OrganizationsController::class, 'store'])
-    ->name('organizations.store')
+Route::post('admin/publications', [PublicationController::class, 'store'])
+    ->name('publications.store')
     ->middleware('auth');
 
-Route::get('organizations/{organization}/edit', [OrganizationsController::class, 'edit'])
-    ->name('organizations.edit')
+Route::get('admin/publications/{article}/edit', [PublicationController::class, 'edit'])
+    ->name('publications.edit')
     ->middleware('auth');
 
-Route::put('organizations/{organization}', [OrganizationsController::class, 'update'])
-    ->name('organizations.update')
+Route::put('admin/publications/{article}', [PublicationController::class, 'update'])
+    ->name('publications.update')
     ->middleware('auth');
 
-Route::delete('organizations/{organization}', [OrganizationsController::class, 'destroy'])
-    ->name('organizations.destroy')
+Route::delete('admin/publications/{article}', [PublicationController::class, 'destroy'])
+    ->name('publications.destroy')
     ->middleware('auth');
 
-Route::put('organizations/{organization}/restore', [OrganizationsController::class, 'restore'])
-    ->name('organizations.restore')
-    ->middleware('auth');
-
-// Contacts
-
-Route::get('contacts', [ContactsController::class, 'index'])
-    ->name('contacts')
-    ->middleware('auth');
-
-Route::get('contacts/create', [ContactsController::class, 'create'])
-    ->name('contacts.create')
-    ->middleware('auth');
-
-Route::post('contacts', [ContactsController::class, 'store'])
-    ->name('contacts.store')
-    ->middleware('auth');
-
-Route::get('contacts/{contact}/edit', [ContactsController::class, 'edit'])
-    ->name('contacts.edit')
-    ->middleware('auth');
-
-Route::put('contacts/{contact}', [ContactsController::class, 'update'])
-    ->name('contacts.update')
-    ->middleware('auth');
-
-Route::delete('contacts/{contact}', [ContactsController::class, 'destroy'])
-    ->name('contacts.destroy')
-    ->middleware('auth');
-
-Route::put('contacts/{contact}/restore', [ContactsController::class, 'restore'])
-    ->name('contacts.restore')
+Route::put('admin/publications/{article}/restore', [PublicationController::class, 'restore'])
+    ->name('publications.restore')
     ->middleware('auth');
 
 // Reports
 
-Route::get('reports', [ReportsController::class, 'index'])
+Route::get('admin/reports', [ReportsController::class, 'index'])
     ->name('reports')
     ->middleware('auth');
 
@@ -140,3 +113,17 @@ Route::get('reports', [ReportsController::class, 'index'])
 Route::get('/img/{path}', [ImagesController::class, 'show'])
     ->where('path', '.*')
     ->name('image');
+
+// Frontline
+
+Route::get('/', [HomeController::class, 'index'])
+->name('home');
+
+Route::get('/about', [AboutController::class, 'index'])
+->name('about');
+
+Route::get('/project', [ProjectController::class, 'index'])
+->name('project');
+
+Route::get('/article', [ArticleController::class, 'index'])
+->name('article');

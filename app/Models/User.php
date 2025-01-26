@@ -2,17 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
+ */
+
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -53,9 +58,9 @@ class User extends Authenticatable
         return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
     }
 
-    public function account(): BelongsTo
+    public function articles(): HasMany
     {
-        return $this->belongsTo(Account::class);
+        return $this->hasMany(Article::class);
     }
 
     public function getNameAttribute()
@@ -68,10 +73,10 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::needsRehash($password) ? Hash::make($password) : $password;
     }
 
-    public function isDemoUser()
-    {
-        return $this->email === 'johndoe@example.com';
-    }
+    // public function isDemoUser()
+    // {
+    //     return $this->email === 'johndoe@example.com';
+    // }
 
     public function scopeOrderByName($query)
     {
