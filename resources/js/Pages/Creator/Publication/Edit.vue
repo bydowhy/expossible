@@ -14,6 +14,7 @@
             <option :value="null" />
             <option value="ATM">Automation</option>
             <option value="EL">Electrical</option>
+            <option value="Tech">Technology</option>
           </select-input>
           <text-input v-model="form.paragraph" :error="form.errors.paragraph" class="pb-8 pr-6 w-full h-96" label="Paragraph" />
         </div>
