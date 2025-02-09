@@ -13,6 +13,7 @@
             <option :value="null" />
             <option value="ATM">Automation</option>
             <option value="EL">Electrical</option>
+            <option value="Tech">Technology</option>
           </select-input>
           <!-- <text-input v-model="form.paragraph" :error="form.errors.paragraph" class="pb-8 pr-6 w-full h-96" label="Paragraph" /> -->
           <div v-if="editor" class="flex flex-nowrap flex-row gap-x-2 p-4 border-b border-gray-300">
