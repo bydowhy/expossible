@@ -1,6 +1,7 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default {
+  darkMode: 'selector',
   content: ['./resources/**/*.{js,vue,blade.php}'],
   theme: {
     extend: {
