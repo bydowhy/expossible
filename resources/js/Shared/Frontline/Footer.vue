@@ -29,7 +29,7 @@ const navigation = [
 ]
 
 const copyright = {
-    year: '2024', project: 'EXpossible Project.' 
+    year: '2025', project: 'EXpossible Project.' 
 }
 </script>
 
