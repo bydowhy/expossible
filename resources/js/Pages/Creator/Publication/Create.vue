@@ -15,19 +15,8 @@
             <option value="EL">Electrical</option>
             <option value="Tech">Technology</option>
           </select-input>
-          <text-input v-model="form.paragraph" :error="form.errors.paragraph" class="pb-8 pr-6 w-full h-96" label="Paragraph" />
-          <!-- <div v-if="editor" class="flex flex-nowrap flex-row gap-x-2 p-4 border-b border-gray-300">
-            <button @click="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'bg-slate-300': editor.isActive('bold') }" class="px-2 py-1 rounded-md text-sm border border-slate-400">
-              Bold
-            </button>
-            <button @click="editor.chain().focus().toggleItalic().run()" :disabled="!editor.can().chain().focus().toggleItalic().run()" :class="{ 'bg-slate-300': editor.isActive('italic') }" class="px-2 py-1 rounded-md text-sm border border-slate-400">
-              Italic
-            </button>
-            <button @click="editor.chain().focus().toggleUnderline().run()" :disabled="!editor.can().chain().focus().toggleUnderline().run()" :class="{ 'bg-slate-300': editor.isActive('underline') }" class="px-2 py-1 rounded-md text-sm border border-slate-400">
-              Underline
-            </button>
-          </div>
-          <EditorContent v-if="editor" :editor="editor" class="tiptap p-4 min-h-96 outline-1 outline-rose-600 overflow-auto" /> -->
+          <!-- <text-input v-model="form.paragraph" :error="form.errors.paragraph" class="pb-8 pr-6 w-full h-96" label="Paragraph" /> -->
+          <Editor v-model="form.paragraph" :error="form.errors.paragraph" label="Paragraph" />
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
           <loading-button :loading="form.processing" class="btn-indigo" type="submit">Create Article</loading-button>
@@ -43,6 +32,7 @@ import Layout from '@/Shared/Creator/Layout.vue'
 import TextInput from '@/Shared/Creator/TextInput.vue'
 import SelectInput from '@/Shared/Creator/SelectInput.vue'
 import LoadingButton from '@/Shared/Creator/LoadingButton.vue'
+import Editor from '@/Shared/Creator/Editor.vue'
 
 export default {
   components: {
@@ -51,6 +41,7 @@ export default {
     LoadingButton,
     SelectInput,
     TextInput,
+    Editor
   },
   layout: Layout,
   props: {
